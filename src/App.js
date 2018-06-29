@@ -1,46 +1,95 @@
 import React, { Component } from 'react';
 
-class Cell extends Component {
+function Cell(props) {
+    return (
+        <div className="cell" >
+            { props.value }
+        </div>
+    )
+}
+
+class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            number: props.number,
-            value: props.value
+            values: Array(16).fill(null),
         };
     }
 
     render() {
         return (
-            <div className="cell" >{ this.state.value }</div>
-        )
-    }
-}
-
-class Board extends Component {
-    render() {
-        return (
             <div className="board">
-                <Cell number={1} value={null} />
-                <Cell number={2} value={null} />
-                <Cell number={3} value={null} />
-                <Cell number={4} value={null} />
+                { this.renderCell(0) }
+                { this.renderCell(1) }
+                { this.renderCell(2) }
+                { this.renderCell(3) }
 
-                <Cell number={5} value={null} />
-                <Cell number={6} value={null} />
-                <Cell number={7} value={null} />
-                <Cell number={8} value={null} />
+                { this.renderCell(4) }
+                { this.renderCell(5) }
+                { this.renderCell(6) }
+                { this.renderCell(7) }
 
-                <Cell number={9} value={null} />
-                <Cell number={10} value={null} />
-                <Cell number={11} value={null} />
-                <Cell number={12} value={null} />
+                { this.renderCell(8) }
+                { this.renderCell(9) }
+                { this.renderCell(10) }
+                { this.renderCell(11) }
 
-                <Cell number={13} value={null} />
-                <Cell number={14} value={null} />
-                <Cell number={15} value={null} />
-                <Cell number={16} value={null} />
+                { this.renderCell(12) }
+                { this.renderCell(13) }
+                { this.renderCell(14) }
+                { this.renderCell(15) }
             </div>
         )
+    }
+
+    renderCell(i) {
+        return (
+            <Cell
+                value={ this.state.values[i] }
+            />
+        );
+    }
+
+    createBlock() {
+        let values = this.state.values.slice();
+        let index;
+
+        do {
+            index = parseInt(Math.random() * 100, 10) % 16;
+        } while(values[index] !== null);
+
+        let number = parseInt(Math.random() * 10, 10) % 8;
+        number === 0 ? number = 4 : number = 2;
+
+        values[index] = number;
+
+        this.setState({
+            values: values
+        });
+    }
+
+    createTwoBlocks() {
+        let values = this.state.values.slice();
+        let index;
+
+        for (let i = 0; i < 2; i++) {
+            do {
+                index = parseInt(Math.random() * 100, 10) % 16;
+            } while(values[index] !== null);
+
+            let number = parseInt(Math.random() * 10, 10) % 10;
+            number === 0 ? number = 4 : number = 2;
+
+            values[index] = number;
+        }
+
+        this.setState({
+            values: values
+        });
+    }
+
+    componentDidMount() {
+        this.createTwoBlocks();
     }
 }
 
