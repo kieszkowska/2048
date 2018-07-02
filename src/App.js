@@ -14,11 +14,12 @@ class Board extends Component {
         this.state = {
             values: Array(16).fill(null),
         };
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     render() {
         return (
-            <div className="board">
+            <div className="board" onKeyDown={ this.handleKeyDown }>
                 { this.renderCell(0) }
                 { this.renderCell(1) }
                 { this.renderCell(2) }
@@ -90,6 +91,23 @@ class Board extends Component {
 
     componentDidMount() {
         this.createTwoBlocks();
+        window.addEventListener("keydown", this.handleKeyDown);
+    }
+
+    moveLeft() {
+        console.log('left');
+    }
+
+    handleKeyDown(e) {
+        if (e.keyCode === 37){
+            this.moveLeft();
+        } else if (e.keyCode === 38){
+            console.log('up');
+        } else if (e.keyCode === 39){
+            console.log('right');
+        } else if (e.keyCode === 40){
+            console.log('down');
+        }
     }
 }
 
