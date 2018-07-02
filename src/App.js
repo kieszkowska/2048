@@ -161,14 +161,48 @@ class Board extends Component {
         }
     }
 
+    moveUp() {
+        let values = this.state.values.slice();
+        let wasMoved = false;
+
+        for (let i = 0; i < 4; i++) {
+
+            for (let k = 0; k < 4; k++) {
+                let j = i;
+
+                while (j < i + 12 && j >= i) {
+                    console.log(j + ', ' + (j + 4));
+
+                    if (values[j + 4] !== null && values[j] === null) {
+                        values[j] = values[j + 4];
+                        values[j + 4] = null;
+                        wasMoved = true;
+                    } else if (values[j] !== null && values[j] === values[j + 4]) {
+                        values[j] *= 2;
+                        values[j + 4] = null;
+                        wasMoved = true;
+                    }
+                    j += 4;
+                }
+            }
+        }
+
+        if (wasMoved) {
+            this.setState({
+                values: values
+            });
+            this.createBlock();
+        }
+    }
+
     handleKeyDown(e) {
-        if (e.keyCode === 37){
+        if (e.keyCode === 37) {
             this.moveLeft();
-        } else if (e.keyCode === 38){
-            console.log('up');
-        } else if (e.keyCode === 39){
+        } else if (e.keyCode === 38) {
+            this.moveUp();
+        } else if (e.keyCode === 39) {
             this.moveRight();
-        } else if (e.keyCode === 40){
+        } else if (e.keyCode === 40) {
             console.log('down');
         }
     }
