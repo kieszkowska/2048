@@ -18,6 +18,58 @@
     align-items: center;
     font-weight: bolder;
     font-size: 25px;
+    color: #786D66;
 }
 
+.cell-2 {
+    background-color: #eee4da;
+}
 
+.cell-4 {
+    background-color: #ede0c8;
+}
+
+.cell-8 {
+    color: #f9f6f2;
+    background-color: #f2b179;
+}
+
+.cell-16 {
+    color: #f9f6f2;
+    background-color: #f59563;
+}
+
+.cell-32 {
+    color: #f9f6f2;
+    background: #f67c5f;
+}
+
+.cell-64 {
+    color: #f9f6f2;
+    background: #f65e3b;
+}
+
+.cell-128 {
+    color: #f9f6f2;
+    background: #edcf72
+}
+
+.cell-256 {
+    color: #f9f6f2;
+    background: #edcc61
+}
+
+.cell-512 {
+    color: #f9f6f2;
+    background: #edc850
+}
+
+.cell-1024 {
+    color: #f9f6f2;
+    background: #edc53f
+}
+
+.cell-2048 {
+    color: #f9f6f2;
+    background: #edc22e
+}
