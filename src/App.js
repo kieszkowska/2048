@@ -94,8 +94,29 @@ class Board extends Component {
         window.addEventListener("keydown", this.handleKeyDown);
     }
 
-    moveLeft() {
+    handleKeyDown(e) {
         let values = this.state.values.slice();
+        let wasMoved = false;
+
+        if (e.keyCode === 37) {
+            wasMoved = this.moveLeft(values);
+        } else if (e.keyCode === 38) {
+            wasMoved = this.moveUp(values);
+        } else if (e.keyCode === 39) {
+            wasMoved = this.moveRight(values);
+        } else if (e.keyCode === 40) {
+            wasMoved = this.moveDown(values);
+        }
+
+        if (wasMoved) {
+            this.setState({
+                values: values
+            });
+            this.createBlock();
+        }
+    }
+
+    moveLeft(values) {
         let wasMoved = false;
 
         for (let i = 0; i < 4; i++) {
@@ -120,16 +141,10 @@ class Board extends Component {
             }
         }
 
-        if (wasMoved) {
-            this.setState({
-                values: values
-            });
-            this.createBlock();
-        }
+        return wasMoved;
     }
 
-    moveRight() {
-        let values = this.state.values.slice();
+    moveRight(values) {
         let wasMoved = false;
 
         for (let i = 1; i <= 4; i++) {
@@ -153,16 +168,37 @@ class Board extends Component {
             }
         }
 
-        if (wasMoved) {
-            this.setState({
-                values: values
-            });
-            this.createBlock();
-        }
+        return wasMoved;
     }
 
-    moveUp() {
-        let values = this.state.values.slice();
+    moveDown(values) {
+        let wasMoved = false;
+
+        for (let i = 0; i < 4; i++) {
+
+            for (let k = 0; k < 4; k++) {
+                let j = i + 12;
+
+                while (j > i && j <= i + 12) {
+
+                    if (values[j - 4] !== null && values[j] === null) {
+                        values[j] = values[j - 4];
+                        values[j - 4] = null;
+                        wasMoved = true;
+                    } else if (values[j] !== null && values[j] === values[j - 4]) {
+                        values[j] *= 2;
+                        values[j - 4] = null;
+                        wasMoved = true;
+                    }
+                    j -= 4;
+                }
+            }
+        }
+
+        return wasMoved;
+    }
+
+    moveUp(values) {
         let wasMoved = false;
 
         for (let i = 0; i < 4; i++) {
@@ -187,24 +223,7 @@ class Board extends Component {
             }
         }
 
-        if (wasMoved) {
-            this.setState({
-                values: values
-            });
-            this.createBlock();
-        }
-    }
-
-    handleKeyDown(e) {
-        if (e.keyCode === 37) {
-            this.moveLeft();
-        } else if (e.keyCode === 38) {
-            this.moveUp();
-        } else if (e.keyCode === 39) {
-            this.moveRight();
-        } else if (e.keyCode === 40) {
-            console.log('down');
-        }
+        return wasMoved;
     }
 }
 
