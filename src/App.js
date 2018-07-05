@@ -121,23 +121,25 @@ class Board extends Component {
 
         for (let i = 0; i < 4; i++) {
 
-            for (let k = 0; k < 4; k++) {
-                let j = i * 4 + 1;
+            let j = i * 4 + 1;
 
-                while (j < (i + 1) * 4 && j >= i * 4 + 1) {
+            while (j < (i + 1) * 4 && j >= i * 4 + 1) {
 
-                    if (values[j] !== null && values[j - 1] === null) {
-                        values[j - 1] = values[j];
-                        values[j] = null;
-                        wasMoved = true;
-                    } else if (values[j] !== null && values[j] === values[j - 1]) {
-                        values[j - 1] *= 2;
-                        values[j] = null;
-                        wasMoved = true;
-                    }
+                while (values[j] !== null && values[j - 1] === null) {
+                    values[j - 1] = values[j];
+                    values[j] = null;
+                    wasMoved = true;
 
-                    j++;
+                    if (j > i * 4 + 1) j--;
                 }
+
+                if (values[j] !== null && values[j] === values[j - 1]) {
+                    values[j - 1] *= 2;
+                    values[j] = null;
+                    wasMoved = true;
+                }
+
+                j++;
             }
         }
 
@@ -149,22 +151,24 @@ class Board extends Component {
 
         for (let i = 1; i <= 4; i++) {
 
-            for (let k = 0; k < 4; k++) {
-                let j = i * 4 - 2;
+            let j = i * 4 - 2;
 
-                while (j >= (i - 1) * 4 && j <= i * 4) {
+            while (j >= (i - 1) * 4 && j <= i * 4) {
 
-                    if (values[j] !== null && values[j + 1] === null) {
-                        values[j + 1] = values[j];
-                        values[j] = null;
-                        wasMoved = true;
-                    } else if (values[j] !== null && values[j] === values[j + 1]) {
-                        values[j + 1] *= 2;
-                        values[j] = null;
-                        wasMoved = true;
-                    }
-                    j--;
+                while (values[j] !== null && values[j + 1] === null) {
+                    values[j + 1] = values[j];
+                    values[j] = null;
+                    wasMoved = true;
+
+                    if (j < i * 4) j++;
                 }
+
+                if (values[j] !== null && values[j] === values[j + 1]) {
+                    values[j + 1] *= 2;
+                    values[j] = null;
+                    wasMoved = true;
+                }
+                j--;
             }
         }
 
@@ -176,22 +180,24 @@ class Board extends Component {
 
         for (let i = 0; i < 4; i++) {
 
-            for (let k = 0; k < 4; k++) {
-                let j = i + 12;
+            let j = i + 12;
 
-                while (j > i && j <= i + 12) {
+            while (j > i && j <= i + 12) {
 
-                    if (values[j - 4] !== null && values[j] === null) {
-                        values[j] = values[j - 4];
-                        values[j - 4] = null;
-                        wasMoved = true;
-                    } else if (values[j] !== null && values[j] === values[j - 4]) {
-                        values[j] *= 2;
-                        values[j - 4] = null;
-                        wasMoved = true;
-                    }
-                    j -= 4;
+                while (values[j - 4] !== null && values[j] === null) {
+                    values[j] = values[j - 4];
+                    values[j - 4] = null;
+                    wasMoved = true;
+
+                    if(j < i + 12) j += 4;
                 }
+
+                if (values[j] !== null && values[j] === values[j - 4]) {
+                    values[j] *= 2;
+                    values[j - 4] = null;
+                    wasMoved = true;
+                }
+                j -= 4;
             }
         }
 
@@ -203,23 +209,24 @@ class Board extends Component {
 
         for (let i = 0; i < 4; i++) {
 
-            for (let k = 0; k < 4; k++) {
-                let j = i;
+            let j = i;
 
-                while (j < i + 12 && j >= i) {
-                    console.log(j + ', ' + (j + 4));
+            while (j < i + 12 && j >= i) {
 
-                    if (values[j + 4] !== null && values[j] === null) {
-                        values[j] = values[j + 4];
-                        values[j + 4] = null;
-                        wasMoved = true;
-                    } else if (values[j] !== null && values[j] === values[j + 4]) {
-                        values[j] *= 2;
-                        values[j + 4] = null;
-                        wasMoved = true;
-                    }
-                    j += 4;
+                while (values[j + 4] !== null && values[j] === null) {
+                    values[j] = values[j + 4];
+                    values[j + 4] = null;
+                    wasMoved = true;
+
+                    if (j > i) j -= 4;
                 }
+
+                if (values[j] !== null && values[j] === values[j + 4]) {
+                    values[j] *= 2;
+                    values[j + 4] = null;
+                    wasMoved = true;
+                }
+                j += 4;
             }
         }
 
