@@ -1,4 +1,16 @@
+body {
+    background-color: #FAF8EF;
+    color: #786D66;
+    text-align: center;
+}
+
+h1 {
+    font-size: 500%;
+    line-height: 70%;
+}
+
 .board {
+    margin: 0 auto;
     background-color: #BCAB9F;
     border-radius: 8px;
     display: flex;

@@ -149,18 +149,18 @@ class Board extends Component {
     moveRight(values) {
         let wasMoved = false;
 
-        for (let i = 1; i <= 4; i++) {
+        for (let i = 0; i < 4; i++) {
 
-            let j = i * 4 - 2;
+            let j = i * 4 + 2;
 
-            while (j >= (i - 1) * 4 && j <= i * 4) {
+            while (j < (i + 1) * 4 && j >= i * 4) {
 
                 while (values[j] !== null && values[j + 1] === null) {
                     values[j + 1] = values[j];
                     values[j] = null;
                     wasMoved = true;
 
-                    if (j < i * 4) j++;
+                    if (j < (i + 1) * 4 - 2) j++;
                 }
 
                 if (values[j] !== null && values[j] === values[j + 1]) {
@@ -168,6 +168,7 @@ class Board extends Component {
                     values[j] = null;
                     wasMoved = true;
                 }
+
                 j--;
             }
         }
