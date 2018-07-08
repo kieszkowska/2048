@@ -13,6 +13,7 @@ class Board extends Component {
         super(props);
         this.state = {
             values: Array(16).fill(null),
+            newBlock: false
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
     }
@@ -54,10 +55,12 @@ class Board extends Component {
     createBlock() {
         let values = this.state.values.slice();
         let index;
+        let counter = 0;
 
         do {
             index = parseInt(Math.random() * 100, 10) % 16;
-        } while(values[index] !== null);
+            counter++;
+        } while(values[index] !== null && counter < 100);
 
         let number = parseInt(Math.random() * 10, 10) % 8;
         number === 0 ? number = 4 : number = 2;
@@ -96,52 +99,77 @@ class Board extends Component {
 
     handleKeyDown(e) {
         let values = this.state.values.slice();
-        let wasMoved = false;
-        let tmp =[];
+        let tmp = [];
+        let direction = 0;
 
         for (let i = 0; i < 4; i++) {
             let j = i * 4;
             tmp[i] = values.slice(j, j + 4);
         }
 
-        console.log(tmp);
-
         if (e.keyCode === 37) {
-            wasMoved = this.moveLeft(values);
+            direction = 0;
         } else if (e.keyCode === 38) {
-            wasMoved = this.moveUp(values);
+            direction = 3;
         } else if (e.keyCode === 39) {
-            wasMoved = this.moveRight(values);
+            direction = 2;
         } else if (e.keyCode === 40) {
-            wasMoved = this.moveDown(values);
+            direction = 1;
+        } else {
+            return;
         }
+
+
+        tmp = rotateBoard(tmp, direction);
+        tmp = this.makeMove(tmp);
+        tmp = rotateBoard(tmp, - direction);
 
         values = [].concat.apply([], tmp);
 
-        console.log(values);
-
-        if (wasMoved) {
+        if (this.state.newBlock === true) {
             this.setState({
                 values: values
             });
             this.createBlock();
+            this.setState({
+                newBlock: false
+            });
         }
     }
 
-    moveLeft(values) {
+    makeMove(values) {
 
-    }
+        for (let i = 0; i < 4; i++) {
+            values[i] = values[i].filter((val) => val > 0);
+            if (values[i].length < 3) {
+                this.setState({
+                    newBlock: true
+                });
+            }
+        }
 
-    moveRight(values) {
+        for (let i = 0; i < values.length; i++) {
+            for (let j = 0; j < values[i].length - 1; j++) {
+                if (values[i][j] > 0 && values[i][j] === values[i][j + 1]) {
+                    values[i][j] *= 2;
+                    values[i][j + 1] = null;
+                    values[i] = values[i].filter((val) => val > 0);
+                    this.setState({
+                        newBlock: true
+                    });
+                }
+            }
+        }
 
-    }
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (! values[i][j]) {
+                    values[i][j] = null;
+                }
+            }
+        }
 
-    moveDown(values) {
-
-    }
-
-    moveUp(values) {
-
+        return values;
     }
 }
 
@@ -156,35 +184,41 @@ class App extends Component {
     }
 }
 
-function rotate(deg, array) {
-    let map = array;
+function rotateBoard(array, dir) {
 
-    if (deg === 90) {
-
-        map = map[0].map((col, i) => map.map(row => row[i]));
-
-        map.forEach(function(row, y) {
-            map[y].reverse();
-        });
-
-    } else if (deg === -90) {
-
-        this.rotate(180);
-        this.rotate(90);
-
-    } else if (deg === 180 || deg === -180) {
-
-        this.rotate(90);
-        this.rotate(90);
-
-    } else if (deg === 270) {
-
-        this.rotate(-90);
-
-    } else if (deg === -270) {
-
-        this.rotate(90);
+    if (dir === 0) {
+        return array;
     }
+
+    if (dir === 1 || dir === -3) {
+        array = rotateOnce(array);
+
+        return array;
+
+    } else if (dir === 2 || dir === -2) {
+        array = rotateOnce(array);
+        array = rotateOnce(array);
+
+        return array;
+
+    } else if (dir === 3 || dir === -1) {
+        array = rotateOnce(array);
+        array = rotateOnce(array);
+        array = rotateOnce(array);
+
+        return array;
+
+    }
+}
+
+function rotateOnce(array) {
+    array = array[0].map((col, i) => array.map(row => row[i]));
+
+    array.forEach(function(row, y) {
+        array[y].reverse();
+    });
+
+    return array;
 }
 
 export default App;
