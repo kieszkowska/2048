@@ -97,6 +97,14 @@ class Board extends Component {
     handleKeyDown(e) {
         let values = this.state.values.slice();
         let wasMoved = false;
+        let tmp =[];
+
+        for (let i = 0; i < 4; i++) {
+            let j = i * 4;
+            tmp[i] = values.slice(j, j + 4);
+        }
+
+        console.log(tmp);
 
         if (e.keyCode === 37) {
             wasMoved = this.moveLeft(values);
@@ -108,6 +116,10 @@ class Board extends Component {
             wasMoved = this.moveDown(values);
         }
 
+        values = [].concat.apply([], tmp);
+
+        console.log(values);
+
         if (wasMoved) {
             this.setState({
                 values: values
@@ -117,121 +129,19 @@ class Board extends Component {
     }
 
     moveLeft(values) {
-        let wasMoved = false;
 
-        for (let i = 0; i < 4; i++) {
-
-            let j = i * 4 + 1;
-
-            while (j < (i + 1) * 4 && j >= i * 4 + 1) {
-
-                while (values[j] !== null && values[j - 1] === null) {
-                    values[j - 1] = values[j];
-                    values[j] = null;
-                    wasMoved = true;
-
-                    if (j > i * 4 + 1) j--;
-                }
-
-                if (values[j] !== null && values[j] === values[j - 1]) {
-                    values[j - 1] *= 2;
-                    values[j] = null;
-                    wasMoved = true;
-                }
-
-                j++;
-            }
-        }
-
-        return wasMoved;
     }
 
     moveRight(values) {
-        let wasMoved = false;
 
-        for (let i = 0; i < 4; i++) {
-
-            let j = i * 4 + 2;
-
-            while (j < (i + 1) * 4 && j >= i * 4) {
-
-                while (values[j] !== null && values[j + 1] === null) {
-                    values[j + 1] = values[j];
-                    values[j] = null;
-                    wasMoved = true;
-
-                    if (j < (i + 1) * 4 - 2) j++;
-                }
-
-                if (values[j] !== null && values[j] === values[j + 1]) {
-                    values[j + 1] *= 2;
-                    values[j] = null;
-                    wasMoved = true;
-                }
-
-                j--;
-            }
-        }
-
-        return wasMoved;
     }
 
     moveDown(values) {
-        let wasMoved = false;
 
-        for (let i = 0; i < 4; i++) {
-
-            let j = i + 12;
-
-            while (j > i && j <= i + 12) {
-
-                while (values[j - 4] !== null && values[j] === null) {
-                    values[j] = values[j - 4];
-                    values[j - 4] = null;
-                    wasMoved = true;
-
-                    if(j < i + 12) j += 4;
-                }
-
-                if (values[j] !== null && values[j] === values[j - 4]) {
-                    values[j] *= 2;
-                    values[j - 4] = null;
-                    wasMoved = true;
-                }
-                j -= 4;
-            }
-        }
-
-        return wasMoved;
     }
 
     moveUp(values) {
-        let wasMoved = false;
 
-        for (let i = 0; i < 4; i++) {
-
-            let j = i;
-
-            while (j < i + 12 && j >= i) {
-
-                while (values[j + 4] !== null && values[j] === null) {
-                    values[j] = values[j + 4];
-                    values[j + 4] = null;
-                    wasMoved = true;
-
-                    if (j > i) j -= 4;
-                }
-
-                if (values[j] !== null && values[j] === values[j + 4]) {
-                    values[j] *= 2;
-                    values[j + 4] = null;
-                    wasMoved = true;
-                }
-                j += 4;
-            }
-        }
-
-        return wasMoved;
     }
 }
 
@@ -243,6 +153,37 @@ class App extends Component {
                 <Board />
             </div>
         )
+    }
+}
+
+function rotate(deg, array) {
+    let map = array;
+
+    if (deg === 90) {
+
+        map = map[0].map((col, i) => map.map(row => row[i]));
+
+        map.forEach(function(row, y) {
+            map[y].reverse();
+        });
+
+    } else if (deg === -90) {
+
+        this.rotate(180);
+        this.rotate(90);
+
+    } else if (deg === 180 || deg === -180) {
+
+        this.rotate(90);
+        this.rotate(90);
+
+    } else if (deg === 270) {
+
+        this.rotate(-90);
+
+    } else if (deg === -270) {
+
+        this.rotate(90);
     }
 }
 
