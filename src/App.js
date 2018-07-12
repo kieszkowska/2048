@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 function Cell(props) {
     return (
-        <div className={ "cell cell-" + props.value}>
+        <div className={ "cell cell-" + props.value }>
             { props.value }
         </div>
     )
@@ -100,6 +100,7 @@ class Board extends Component {
     handleKeyDown(e) {
         let values = this.state.values.slice();
         let tmp = [];
+        let buf = [];
         let direction = 0;
 
         for (let i = 0; i < 4; i++) {
@@ -124,7 +125,15 @@ class Board extends Component {
         tmp = this.makeMove(tmp);
         tmp = rotateBoard(tmp, - direction);
 
+        buf = values;
+
         values = [].concat.apply([], tmp);
+
+        if (! (values.length === buf.length && values.every(function(v,i) { return v === buf[i]}))) {
+            this.setState({
+                newBlock: true
+            });
+        }
 
         if (this.state.newBlock === true) {
             this.setState({
@@ -141,11 +150,6 @@ class Board extends Component {
 
         for (let i = 0; i < 4; i++) {
             values[i] = values[i].filter((val) => val > 0);
-            if (values[i].length < 3) {
-                this.setState({
-                    newBlock: true
-                });
-            }
         }
 
         for (let i = 0; i < values.length; i++) {
@@ -154,9 +158,6 @@ class Board extends Component {
                     values[i][j] *= 2;
                     values[i][j + 1] = null;
                     values[i] = values[i].filter((val) => val > 0);
-                    this.setState({
-                        newBlock: true
-                    });
                 }
             }
         }
