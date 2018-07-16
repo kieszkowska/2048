@@ -14,7 +14,8 @@ class Board extends Component {
         this.state = {
             values: Array(16).fill(null),
             newBlock: false,
-            score: 0
+            score: 0,
+            won: false
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
         this.newGame = this.newGame.bind(this);
@@ -38,6 +39,19 @@ class Board extends Component {
                 </div>
                 <div className="board" onKeyDown={ this.handleKeyDown }>
                     { cells }
+                    <div id="win">
+                        <div>
+                            <h2>You won!</h2>
+                        </div>
+                        <div>
+                            <button onClick={ this.newGame }>New game</button>
+                            <button onClick={ hideMessage }>Keep playing</button>
+                        </div>
+                    </div>
+                    <div id="end">
+                        <h2>Game over!</h2>
+                        <button>Try again</button>
+                    </div>
                 </div>
             </div>
         )
@@ -134,6 +148,13 @@ class Board extends Component {
             });
         }
 
+        if (Math.max( ...values ) === 2048 && !this.state.won) {
+            this.setState({
+                won: true
+            });
+            document.getElementById('win').style.display = 'flex';
+        }
+
         if (this.state.newBlock === true) {
             this.setState({
                 values: values,
@@ -183,8 +204,11 @@ class Board extends Component {
         this.setState({
             values: Array(16).fill(null),
             newBlock: false,
-            score: 0
+            score: 0,
+            won: false
         },() => { this.createTwoBlocks(); });
+
+        hideMessage();
     }
 }
 
@@ -194,6 +218,11 @@ class App extends Component {
             <Board />
         )
     }
+}
+
+function hideMessage() {
+    document.getElementById('win').style.display = 'none';
+    document.getElementById('end').style.display = 'none';
 }
 
 function rotateBoard(array, dir) {

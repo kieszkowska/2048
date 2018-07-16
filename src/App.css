@@ -161,3 +161,25 @@ button:hover {
     margin: 0 auto;
     padding-top: 5px;
 }
+
+#win, #end {
+    background-color: rgba(250, 248, 239, 0.4);
+    height: 370px;
+    width: 370px;
+    position: absolute;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: -5px 0 0 -5px;
+    display: none;
+}
+
+h2 {
+    font-size: 250%;
+}
+
+#win button, #end button {
+    width: 140px;
+    margin: 0 10px;
+}
