@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
 
 body {
     background-color: #FAF8EF;
@@ -7,9 +7,30 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+#header {
+    width: 370px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 h1 {
     font-size: 500%;
     line-height: 70%;
+}
+
+.score {
+    font-size: 120%;
+    color: #ffffff;
+    background-color: #BCAB9F;
+    padding: 3px 0 5px 0;
+    width: 84px;
+    border-radius: 5px;
+}
+
+.score small {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .board {
@@ -33,60 +54,53 @@ h1 {
     align-items: center;
     font-weight: bolder;
     font-size: 25px;
-    color: #786D66;
+    color: #f9f6f2;
 }
 
 .cell-2 {
+    color: #786D66;
     background-color: #eee4da;
 }
 
 .cell-4 {
+    color: #786D66;
     background-color: #ede0c8;
 }
 
 .cell-8 {
-    color: #f9f6f2;
     background-color: #f2b179;
 }
 
 .cell-16 {
-    color: #f9f6f2;
     background-color: #f59563;
 }
 
 .cell-32 {
-    color: #f9f6f2;
-    background: #f67c5f;
+    background-color: #f67c5f;
 }
 
 .cell-64 {
-    color: #f9f6f2;
-    background: #f65e3b;
+    background-color: #f65e3b;
 }
 
 .cell-128 {
-    color: #f9f6f2;
-    background: #edcf72
+    background-color: #edcf72
 }
 
 .cell-256 {
-    color: #f9f6f2;
-    background: #edcc61
+    background-color: #edcc61
 }
 
 .cell-512 {
-    color: #f9f6f2;
-    background: #edc850
+    background-color: #edc850
 }
 
 .cell-1024 {
-    color: #f9f6f2;
-    background: #edc53f
+    background-color: #edc53f
 }
 
 .cell-2048 {
-    color: #f9f6f2;
-    background: #edc22e
+    background-color: #edc22e
 }
 
 #instructions {

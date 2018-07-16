@@ -28,8 +28,10 @@ class Board extends Component {
         }
         return (
             <div>
-                <h1>2048</h1>
-                <div className="score">Score<br /> { this.state.score }</div>
+                <div id="header">
+                    <div id="title"><h1>2048</h1></div>
+                    <div className="score"><small>score</small><br /> { this.state.score }</div>
+                </div>
                 <div className="board" onKeyDown={ this.handleKeyDown }>
                     { cells }
                 </div>
