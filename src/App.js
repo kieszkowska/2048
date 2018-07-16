@@ -17,6 +17,7 @@ class Board extends Component {
             score: 0
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
+        this.newGame = this.newGame.bind(this);
     }
 
     render() {
@@ -30,7 +31,10 @@ class Board extends Component {
             <div>
                 <div id="header">
                     <div id="title"><h1>2048</h1></div>
-                    <div className="score"><small>score</small><br /> { this.state.score }</div>
+                    <div className="scoreContainer">
+                        <div className="score"><small>Score</small><br /> { this.state.score }</div>
+                        <button onClick={ this.newGame }>New game</button>
+                    </div>
                 </div>
                 <div className="board" onKeyDown={ this.handleKeyDown }>
                     { cells }
@@ -173,6 +177,14 @@ class Board extends Component {
         this.setState({
             score: value
         });
+    }
+
+    newGame() {
+        this.setState({
+            values: Array(16).fill(null),
+            newBlock: false,
+            score: 0
+        },() => { this.createTwoBlocks(); });
     }
 }
 
