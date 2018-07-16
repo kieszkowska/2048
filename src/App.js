@@ -13,33 +13,38 @@ class Board extends Component {
         super(props);
         this.state = {
             values: Array(16).fill(null),
-            newBlock: false
+            newBlock: false,
+            score: 0
         };
         this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     render() {
         return (
-            <div className="board" onKeyDown={ this.handleKeyDown }>
-                { this.renderCell(0) }
-                { this.renderCell(1) }
-                { this.renderCell(2) }
-                { this.renderCell(3) }
+            <div>
+                <h1>2048</h1>
+                <div className="score">Score<br /> { this.state.score }</div>
+                <div className="board" onKeyDown={ this.handleKeyDown }>
+                    { this.renderCell(0) }
+                    { this.renderCell(1) }
+                    { this.renderCell(2) }
+                    { this.renderCell(3) }
 
-                { this.renderCell(4) }
-                { this.renderCell(5) }
-                { this.renderCell(6) }
-                { this.renderCell(7) }
+                    { this.renderCell(4) }
+                    { this.renderCell(5) }
+                    { this.renderCell(6) }
+                    { this.renderCell(7) }
 
-                { this.renderCell(8) }
-                { this.renderCell(9) }
-                { this.renderCell(10) }
-                { this.renderCell(11) }
+                    { this.renderCell(8) }
+                    { this.renderCell(9) }
+                    { this.renderCell(10) }
+                    { this.renderCell(11) }
 
-                { this.renderCell(12) }
-                { this.renderCell(13) }
-                { this.renderCell(14) }
-                { this.renderCell(15) }
+                    { this.renderCell(12) }
+                    { this.renderCell(13) }
+                    { this.renderCell(14) }
+                    { this.renderCell(15) }
+                </div>
             </div>
         )
     }
@@ -147,6 +152,7 @@ class Board extends Component {
     }
 
     makeMove(values) {
+        let score = 0;
 
         for (let i = 0; i < 4; i++) {
             values[i] = values[i].filter((val) => val > 0);
@@ -158,6 +164,7 @@ class Board extends Component {
                     values[i][j] *= 2;
                     values[i][j + 1] = null;
                     values[i] = values[i].filter((val) => val > 0);
+                    score += values[i][j];
                 }
             }
         }
@@ -170,17 +177,23 @@ class Board extends Component {
             }
         }
 
+        this.increaseScore(score);
+
         return values;
+    }
+
+    increaseScore(value) {
+        value += this.state.score;
+        this.setState({
+            score: value
+        });
     }
 }
 
 class App extends Component {
     render() {
         return (
-            <div>
-                <h1>2048</h1>
-                <Board />
-            </div>
+            <Board />
         )
     }
 }
