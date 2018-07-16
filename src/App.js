@@ -50,7 +50,7 @@ class Board extends Component {
                     </div>
                     <div id="end">
                         <h2>Game over!</h2>
-                        <button>Try again</button>
+                        <button onClick={ this.newGame }>Try again</button>
                     </div>
                 </div>
             </div>
@@ -139,6 +139,8 @@ class Board extends Component {
         tmp = rotateBoard(tmp, - direction);
 
         buf = values;
+
+        isMovePossible(tmp);
 
         values = [].concat.apply([], tmp);
 
@@ -262,4 +264,28 @@ function rotateOnce(array) {
     return array;
 }
 
+function isMovePossible(values) {
+    for (let i = 0; i < 4; i++) {
+        if (Math.min(...values[i]) === 0) return;
+
+        for (let j = 0; j < 3; j++) {
+            if (values[i][j] === values[i][j + 1]) return;
+        }
+    }
+
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (values[i][j] === values[i + 1][j]) return;
+        }
+    }
+
+    document.getElementById('end').style.display = 'flex';
+}
+
 export default App;
+
+
+// 0   1   2   3
+// 4   5   6   7
+// 8   9   10  11
+// 12  13  14  15
