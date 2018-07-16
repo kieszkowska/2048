@@ -88,3 +88,37 @@ h1 {
     color: #f9f6f2;
     background: #edc22e
 }
+
+#instructions {
+    display: flex;
+    padding-top: 40px;
+    width: 400px;
+    margin: 0 auto;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: center;
+}
+
+.keys {
+    width: 200px;
+}
+
+.key {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #786D66;
+    border-radius: 4px;
+    margin: 3px;
+    opacity: 0.7;
+}
+
+.text {
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 5px;
+}
