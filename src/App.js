@@ -75,7 +75,7 @@ class Board extends Component {
             } while(values[index] !== null);
 
             let number = parseInt(Math.random() * 10, 10) % 10;
-            number === 0 ? number = 4 : number = 2;
+            number = number === 0 ? 4 : 2;
 
             values[index] = number;
         }
@@ -130,12 +130,10 @@ class Board extends Component {
 
         if (this.state.newBlock === true) {
             this.setState({
-                values: values
-            });
-            this.createBlock();
-            this.setState({
+                values: values,
                 newBlock: false
             });
+            this.createBlock();
         }
     }
 
@@ -158,10 +156,8 @@ class Board extends Component {
         }
 
         for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 4; j++) {
-                if (! values[i][j]) {
-                    values[i][j] = null;
-                }
+            while (values[i].length < 4) {
+                values[i].push(null);
             }
         }
 
