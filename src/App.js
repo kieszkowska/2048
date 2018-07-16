@@ -20,30 +20,18 @@ class Board extends Component {
     }
 
     render() {
+        let cells = [];
+        for (let i = 0; i < 16; i++) {
+            cells.push(
+                <div key={ i }>{ this.renderCell(i) }</div>
+            );
+        }
         return (
             <div>
                 <h1>2048</h1>
                 <div className="score">Score<br /> { this.state.score }</div>
                 <div className="board" onKeyDown={ this.handleKeyDown }>
-                    { this.renderCell(0) }
-                    { this.renderCell(1) }
-                    { this.renderCell(2) }
-                    { this.renderCell(3) }
-
-                    { this.renderCell(4) }
-                    { this.renderCell(5) }
-                    { this.renderCell(6) }
-                    { this.renderCell(7) }
-
-                    { this.renderCell(8) }
-                    { this.renderCell(9) }
-                    { this.renderCell(10) }
-                    { this.renderCell(11) }
-
-                    { this.renderCell(12) }
-                    { this.renderCell(13) }
-                    { this.renderCell(14) }
-                    { this.renderCell(15) }
+                    { cells }
                 </div>
             </div>
         )
